@@ -8,6 +8,10 @@ class Api extends REST_Controller {
 		parent::__construct();
 	}
 
+	function index(){
+		$this->load->view('rest_server');
+	}
+
 	function all_users_get(){
 		// load db model
 		$this->load->model('Model_users');
