@@ -65,12 +65,29 @@ class Api extends REST_Controller {
 	}
 
 	/**
-	 * Update a user based on string in url
+	 * Update a user based on string in url. Must pass variables in the body
 	 *
-	 * @var TBA
+	 * @var email
+	 * @var password
 	 */
-	function add_user_put(){
-		//$this->load->library('form_validation');
+	function user_put(){
+		$this->load->library('form_validation');
+		$this->form_validation->set_data($this->put());
+
+		if ($this->form_validation->run('user_put') != false) {
+			$this->load->model('Model_users');
+			$user = $this->put();
+			$user_id = $this->Model_users->insert($user);
+			if (!$user_id) {
+				$this->response(array('status' => 'failure', 'message' => 'Unexpected error when creating a user'), REST_Controller::HTTP_INTERNAL_SERVER_ERROR);
+			}
+			else {
+				$this->response(array('status' => 'success', 'message' => 'User created'));
+			}
+		}
+		else {
+			$this->response( array('status' => 'failure', 'message' => $this->form_validation->get_errors_as_array()), REST_Controller::HTTP_BAD_REQUEST);
+		}
 	}
 
 	/**
