@@ -1,4 +1,12 @@
-<?php 
+/**
+ * Sandbox api for user table
+ *
+ * HTTP RESTful methodsd
+ *
+ * GET, PUT, POST, DELETE
+ */
+
+ <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH.'/libraries/REST_Controller.php';
@@ -7,11 +15,18 @@ class Api extends REST_Controller {
 	function __construct() {
 		parent::__construct();
 	}
-
+	/**
+	 * Default index view
+	 *
+	 */
 	function index(){
 		$this->load->view('rest_server');
 	}
 
+	/**
+	 * Get all users in JSON
+	 *
+	 */
 	function all_users_get(){
 		// load db model
 		$this->load->model('Model_users');
@@ -23,6 +38,11 @@ class Api extends REST_Controller {
 		$this->response($users);
 	}
 
+	/**
+	 * Get single user based on uri id
+	 *
+	 * @var id
+	 */
 	function user_get(){
 		//load id from third uri segment
 		$id = $this->uri->segment(3);
@@ -44,12 +64,20 @@ class Api extends REST_Controller {
 		}
 	}
 
+	/**
+	 * Update a user based on string in url
+	 *
+	 * @var TBA
+	 */
 	function add_user_put(){
 		//$this->load->library('form_validation');
-		
 	}
 
-	/* Sample API w/ array implementation */
+	/**
+	 * Sample hard-coded students array
+	 *
+	 * @var id
+	 */
 	function student_get(){
 
 		$id = $this->uri->segment(3);

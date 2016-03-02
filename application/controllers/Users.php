@@ -50,14 +50,26 @@ class Users extends CI_Controller {
     function user_post()
     {
         // update an existing user and respond with a status/errors
-        $data = array('returned: '. $this->post('id'));
-        $this->response($data);
+        $result = $this->Model_users->update( $this->post('ID'), array(
+            'name' => $this->post('username'),
+            'email' => $this->post('email')
+        ));
+         
+        if($result === FALSE)
+        {
+            $this->response(array('status' => 'failed'));
+        }
+         
+        else
+        {
+            $this->response(array('status' => 'success'));
+        }
     }
  
     function user_delete()
     {
         // delete a user and respond with a status/errors
-        $data = array('returned: '. $this->delete('id'));
+        $data = array('returned: '. $this->delete('ID'));
         $this->response($data);
     }
 }
