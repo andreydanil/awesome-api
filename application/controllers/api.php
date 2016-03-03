@@ -91,6 +91,33 @@ class Api extends REST_Controller {
 	}
 
 	/**
+	 * Delete user based on id.
+	 *
+	 * @var id
+	 */
+	function user_delete(){
+		//load id from third uri segment
+		$id = $this->uri->segment(3);
+
+		// load db model
+		$this->load->model('Model_users');
+
+		// load user form model
+		$user = $this->Model_users->get_by(array('ID' => $id, 'status' => 1));
+
+		// return results
+		if (isset($user['ID']))
+		{
+			$user = $this->Model_users->delete_by(array('ID' => $id));
+			$this->response(array('status' => 'success', 'message' => "user deleted"));
+		}
+		else 
+		{
+			$this->response(array('status' => 'failure', 'message' => 'This specified student could not be found'), REST_Controller::HTTP_NOT_FOUND);
+		}
+	}
+
+	/**
 	 * Sample hard-coded students array
 	 *
 	 * @var id
